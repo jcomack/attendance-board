@@ -1,33 +1,32 @@
 import {Body, Controller, Get, Param, Patch, Post} from '@nestjs/common';
 import {EmployeesService} from './employees.service';
+import {Employee} from './interfaces/employee';
 
 @Controller('employees')
 export class EmployeesController {
     constructor(private readonly employeesService: EmployeesService) {}
 
     @Get()
-    findAll(): [] {
-        // Call service to retrieve employees.
-
-        return [];
+    findAll(): Employee[] {
+        return this.employeesService.findAll();
     }
 
     @Get(':name')
     find(@Param('name') name) {
-        // Call service to retrieve single employee.
+        this.employeesService.find( name );
 
         return false;
     }
 
     @Post()
-    async add(@Body() createEmployeeDto ) {
-        // Call service to add single employee.
+    async add(@Body() createEmployee ) {
+        this.employeesService.create(createEmployee);
 
         return 'Added!';
     }
 
     @Patch()
-    async update(@Body() updateEmployeeDto ) {
-
+    async update(@Body() updateEmployee ) {
+        this.employeesService.update('', updateEmployee);
     }
 }
