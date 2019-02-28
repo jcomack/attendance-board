@@ -1,15 +1,15 @@
-import { Injectable } from '@nestjs/common';
-import {Employee} from './interfaces/employee';
+import { Injectable, Inject } from '@nestjs/common';
+import { Repository } from 'typeorm';
+import { Employee } from './employee.entity';
 
 @Injectable()
 export class EmployeesService {
-    private readonly employees: Employee[] = [];
+    constructor(
+        @Inject('EmployeesRepositoryToken')
+        private readonly employeeRepository: Repository<Employee>,
+    ) {}
 
-    create(employee: Employee) {
-        this.employees.push(employee);
-    }
-
-    findAll() {
-        return this.employees;
+    async findAll(): Promise<Employee[]> {
+        return await this.employeeRepository.find();
     }
 }
