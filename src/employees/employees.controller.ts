@@ -1,8 +1,7 @@
-import {BadRequestException, Body, Controller, Get, Param, Patch, Post, Render} from '@nestjs/common';
+import {Body, Controller, Get, Param, Patch, Post, Render} from '@nestjs/common';
 import {EmployeesService} from './employees.service';
 import {CreateEmployeeDto} from './dto/create-employee.dto';
 import {plainToClass} from 'class-transformer';
-import {validate} from 'class-validator';
 import {UpdateEmployeeDto} from './dto/update-employee.dto';
 
 @Controller('employees')
@@ -29,11 +28,6 @@ export class EmployeesController {
     @Post()
     async create(@Body() createEmployee ) {
         const employee = plainToClass( CreateEmployeeDto, createEmployee );
-        const errors = await validate( employee );
-
-        if (errors.length) {
-            throw new BadRequestException('Invalid employee', errors.toString() );
-        }
 
         return await this.employeesService.create(employee);
     }
