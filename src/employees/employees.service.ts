@@ -25,4 +25,10 @@ export class EmployeesService {
     update(name, body) {
 
     }
+
+    async toggle_presence( employee: Employee ) {
+        employee.status = ! employee.status;
+
+        return await this.employeeRepository.save( employee );
+    }
 }
