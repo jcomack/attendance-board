@@ -15,7 +15,7 @@ export class EmployeesService {
     }
 
     find(name) {
-        return this.employeeRepository.find( { where: { name } } );
+        return this.employeeRepository.findOne( { where: { name } } );
     }
 
     async findAll(): Promise<Employee[]> {

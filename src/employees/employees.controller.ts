@@ -7,13 +7,14 @@ export class EmployeesController {
 
     @Get()
     @Render('employees/all')
-    async findAll() {
+    async root() {
         return { employees: await this.employeesService.findAll() };
     }
 
     @Get(':name')
-    find(@Param('name') name) {
-        return this.employeesService.find( name );
+    @Render('employees/view')
+    async find(@Param('name') name) {
+        return { employee: await this.employeesService.find( name ) };
     }
 
     @Post()
