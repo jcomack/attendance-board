@@ -14,9 +14,7 @@ export class EmployeesController {
 
     @Get(':name')
     find(@Param('name') name) {
-        this.employeesService.find( name );
-
-        return false;
+        return this.employeesService.find( name );
     }
 
     @Post()
