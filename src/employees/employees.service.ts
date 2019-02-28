@@ -22,7 +22,11 @@ export class EmployeesService {
     }
 
     async find(name) {
-        return await this.employeeRepository.findOne( { where: { name } } );
+        try {
+            return await this.employeeRepository.findOneOrFail({where: {name}});
+        } catch (e) {
+            throw new BadRequestException( 'Invalid employee' );
+        }
     }
 
     async findAll(): Promise<Employee[]> {
@@ -30,21 +34,11 @@ export class EmployeesService {
     }
 
     async toggleStatus(name) {
-        const existingEmployee = await this.findUserByName(name);
+        const existingEmployee = await this.find(name);
 
         existingEmployee.status = !existingEmployee.status;
 
-        return await this.employeeRepository.save( {...existingEmployee } );
-    }
-
-    async findUserByName(name: string): Promise<Employee> {
-        const existingEmployee = await this.find( name );
-
-        if ( ! existingEmployee ) {
-            throw new BadRequestException( 'Invalid employee' );
-        }
-
-        return existingEmployee;
+        return await this.employeeRepository.save( { ...existingEmployee } );
     }
 
     async validate( employee ) {
@@ -56,12 +50,10 @@ export class EmployeesService {
     }
 
     async update(name, updateEmployeeDto: UpdateEmployeeDto[]) {
-        const existingEmployee = this.findUserByName(name);
+        const existingEmployee = this.find(name);
 
         await this.validate( updateEmployeeDto );
 
-        return await this.employeeRepository.save( {...existingEmployee, ...updateEmployeeDto } );
+        return await this.employeeRepository.save( { ...existingEmployee, ...updateEmployeeDto } );
     }
-
-
 }
