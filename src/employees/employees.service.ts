@@ -10,13 +10,11 @@ export class EmployeesService {
     ) {}
 
     create(employee: Employee) {
-        this.employees.push(employee);
+        this.employeeRepository.create( employee );
     }
 
     find(name) {
-        return this.employees.find( employee => {
-            return employee.name === name;
-        } );
+        return this.employeeRepository.find( { where: { name } } );
     }
 
     async findAll(): Promise<Employee[]> {
