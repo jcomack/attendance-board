@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>App</title>
+</head>
+<body>
+<h1>All employees</h1>
+{{#each employees}}
+<div style="border:1px solid #CCC; margin: 5px; padding: 5px">
+Name: {{ this.name }}<br />
+Birthday: {{ this.birthday }}<br />
+Is Present: {{ this.status }}<br />
+</div>
+{{/each}}
+</body>
+</html>

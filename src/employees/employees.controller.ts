@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Param, Patch, Post} from '@nestjs/common';
+import {Body, Controller, Get, Param, Patch, Post, Render} from '@nestjs/common';
 import {EmployeesService} from './employees.service';
 import {Employee} from './employee.entity';
 
@@ -7,9 +7,9 @@ export class EmployeesController {
     constructor(private readonly employeesService: EmployeesService) {}
 
     @Get()
-    async findAll(): Promise<Employee[]> {
-        // Call service to retrieve employees.
-        return this.employeesService.findAll();
+    @Render('employees/all')
+    async findAll() {
+        return { employees: await this.employeesService.findAll() };
     }
 
     @Get(':name')
