@@ -1,6 +1,5 @@
 import {Body, Controller, Get, Param, Patch, Post, Render} from '@nestjs/common';
 import {EmployeesService} from './employees.service';
-import {Employee} from './employee.entity';
 
 @Controller('employees')
 export class EmployeesController {
